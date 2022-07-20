@@ -1,0 +1,211 @@
+<odoo>
+    <template id="tranindo_voucher_a4">
+        <t t-call="web.html_container">
+            <t t-name='tranindo_voucher_a4'>
+                <t t-call="fal_tranindo_ext.tranindo_custom_header_footer_voucher">
+                    <t t-foreach="docs" t-as="doc">
+                        <div class="page">
+                            <style>
+                                .page-break {
+                                    page-break-after: always;
+                                }
+                                .padder {
+                                    margin-top: 50cm;
+                                }
+                            </style>
+                            <!--  -->
+                            
+                            <!-- TABLE FOR RECORD -->
+                            <hr style="background-color: black;"/>
+                            <div class="row">
+                                <div class="col-6">
+                                    <span>
+                                        <b>Dibayar kepada:</b>
+                                        <span t-field="doc.partner_id.name" class="o_bold"/>
+                                    </span>
+                                </div>
+                                <!--  -->
+                                <div class="col-6">
+                                    <span>
+                                        <b>No. Voucher:</b>
+                                        <span t-field="doc.name" class="o_bold"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div class="row">
+                                <div class="col-6">
+                                    <span>
+                                        <b>Pembayaran:</b>
+                                    </span>
+                                    <span t-field="doc.payment_reference" class="o_bold"/>
+                                </div>
+                                <!--  -->
+                                <div class="col-6">
+                                    <span>
+                                        <b>No. Bill:</b>
+                                    </span>
+                                    <span t-field="doc.name"/>
+                                        <t t-if="doc.partner_id.city">, 
+                                            <span t-field="doc.partner_id.city"/>
+                                        </t>
+                                        <t t-if="doc.partner_id.state_id">
+                                            <t t-if="doc.partner_id.state_id">, 
+                                                <span t-field="doc.partner_id.state_id"/>
+                                            </t>, 
+                                            <span t-field="doc.partner_id.zip"/>
+                                        </t>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div class="row">
+                                <div class="col-6">
+                                    <span>
+                                        <b>No. Rek:</b>
+                                        <span t-field="doc.name" class="o_bold"/>
+                                    </span>
+                                </div>
+                                <!--  -->
+                                <div class="col-6">
+                                    <span>
+                                        <b>Tanggal:</b>
+                                        <t t-if="doc.invoice_date">
+                                            <span t-esc="doc.invoice_date.strftime('%d %b %Y')" class="o_bold"/>
+                                        </t>
+                                    </span>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div class="row">
+                                <div class="col-6">
+                                    <span>
+                                        <b>Email:</b>
+                                        <span t-field="doc.partner_id.email" class="o_bold"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <table class="table o_report_block_table table-sm h5">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top border-bottom border-dark">
+                                                <span>
+                                                    <font style="font-size: 14px;">
+                                                        <font style="font-size: 14px;">
+                                                            <font style="font-size: 16px;">No.</font>
+                                                        </font>
+                                                    </font>
+                                                </span>
+                                            </th>
+                                            <th class="border-top border-bottom border-dark h5 o_bold text-center">
+                                                <span>
+                                                    <font style="font-size: 14px;">
+                                                        <font style="font-size: 16px;">Keterangan</font>
+                                                    </font>
+                                                </span>
+                                            </th>
+                                            <th class="border-top border-bottom border-dark text-right">
+                                                <span>
+                                                    <font style="font-size: 14px;">
+                                                        <font style="font-size: 16px;">Jumlah</font>
+                                                    </font>
+                                                </span>
+                                            </th>
+                                            <th class="border-top border-bottom border-dark">
+                                                <span>
+                                                    <font style="font-size: 14px;">
+                                                        <font style="font-size: 16px;">Unit</font>
+                                                    </font>
+                                                </span>
+                                            </th>
+                                            <th class="border-top border-bottom border-dark text-left">
+                                                <span>
+                                                    <font style="font-size: 14px;">
+                                                        <font style="font-size: 16px;">Harga</font>
+                                                    </font>
+                                                </span>
+                                            </th>
+                                            <th class="border-top border-bottom border-dark text-center" colspan="3">
+                                                <span>
+                                                    <font style="font-size: 14px;">
+                                                        <font style="font-size: 16px;">Subtotal</font>
+                                                    </font>
+                                                </span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <!-- TBODY -->
+                                    <tbody>
+                                        <t t-set="i" t-value="0"/>
+                                        <tr t-foreach="doc.invoice_line_ids" t-as="invoice" style="page-break-before: always;">
+                                            <t t-set="i" t-value="i+1"/>
+                                            <td class="text-center">
+                                                <span t-esc="i" class="h5"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="invoice.name"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="invoice.quantity"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="invoice.product_uom_id.name"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="invoice.price_unit"/>
+                                            </td>
+                                            <td class="text-right"> 
+                                                <td class="text-left"> 
+                                                    Rp.
+                                                </td>
+                                                <td class="text-right"> 
+                                                    <span t-esc="invoice.price_subtotal"/>
+                                                </td>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="pt-3"/>
+                                <div class="row">
+                                    <div class="col-9"/>
+                                    <div class="col-1 text-left border-top border-dark">
+                                        <span class="h7 o_bold">Total :</span>
+                                    </div>
+                                    <div class="col-2 text-right border-top border-dark">
+                                        <span class="h7 o_bold"><span t-field="doc.amount_total"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_tranindo_voucher_a4" model="ir.actions.report">
+        <field name="name">Voucher A4</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fal_tranindo_ext.tranindo_voucher_a4</field>
+        <field name="report_file">fal_tranindo_ext.tranindo_voucher_a4</field>
+        <field name="print_report_name">'Voucher A4 - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="paperformat_tranindo_voucher_a4" model="report.paperformat">
+        <field name="name">Voucher A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">24</field>
+        <field name="margin_bottom">30</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+        <field name="report_ids" eval="[(4, ref('action_tranindo_voucher_a4'))]"/>
+    </record>
+</odoo>

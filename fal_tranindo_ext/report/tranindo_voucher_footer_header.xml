@@ -1,0 +1,114 @@
+<odoo>
+    <template id="tranindo_custom_header_footer_voucher">
+
+		<t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+        
+        <t t-call="fal_tranindo_ext.tranindo_external_header_footer_voucher"><t t-raw="0"/></t>
+	</template>
+
+    <template id="tranindo_external_header_footer_voucher">
+        <div class='header'> 
+            <div class="row">
+                <!--  -->
+                <div class="col-sm">
+                    <p class="text-center">
+                        <span t-field="res_company.name" class="h4 o_bold"/>
+                        <br/>
+                        <span class="h4 o_bold" style="text-transform: uppercase;">
+                            payment voucher
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-right">
+                    <span class="h7 o_bold">Page : <span class="page"/>/<span class="topage"/></span>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <div class="pt-0">
+                <t t-call="web.address_layout"/>
+            </div>
+            <t t-raw="0"/>
+        </div>
+        <!--  -->
+        <div class="footer">
+            <div>
+                <div class="row">
+                    <div class="col-3">
+                        <span>
+                            <strong>
+                                Mengetahui
+                            </strong>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <span>
+                                ____________________
+                            </span>
+                            <span>
+                                <u/>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-3">
+                        <span>
+                            <strong>Menyetujui</strong>
+                            <br/>
+                            <span>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <span>
+                                    ________________
+                                </span>
+                            </span>
+                        </span>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </div>
+                    <div class="col-3">
+                        <span>
+                            <strong>Kasir</strong>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <span>
+                                ________________
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-3">
+                        <span>
+                            <strong>Pembukuan</strong>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <span>
+                                ________________
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

@@ -1,0 +1,177 @@
+<odoo>
+    <template id="tranindo_custom_header_footer_sj_letter">
+
+		<t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+        
+        <t t-call="fal_tranindo_ext.tranindo_external_header_footer"><t t-raw="0"/></t>
+	</template>
+
+    <template id="tranindo_external_header_footer">
+        <div class='header'> 
+            <div class="row">
+                <div class="col-2">
+                    <span/>
+                    <span t-field="res_company.logo" t-options-widget="&quot;image&quot;" style="width:140px;display:inline-block"/>
+                </div>
+                <!--  -->
+                <div class="col-5">
+                    <span/>
+                    <span t-field="res_company.name" class="o_bold"/>
+                    <br/>
+                    <span class="small o_bold"><span t-field="res_company.street" class="o_bold"/></span>
+                    <br/>
+                    <!-- <span class="small o_bold">
+                        Telp.<span t-field="res_company.phone" class="o_bold"/>
+                    </span> -->
+                    <span class="small o_bold">
+                        Phone : <span t-field="o.company_id.phone" class="o_bold"/>
+                        Fax : <span t-field="o.company_id.fax" class="o_bold"/>
+                    </span>
+                </div>
+                <!--  -->
+                <div class="col-4 text-right">
+                    <span/>
+                    <span class="h2 o_bold">SURAT JALAN</span>
+                    <br/>
+                    <span class="h7 o_bold">Page : <span class="page"/>/<span class="topage"/></span>
+                </div>
+                <!--  -->
+            </div>
+            <div>
+                <hr style="background-color: black;"/>
+                <div class="row">
+                    <div class="col-6">
+                        <span>
+                            <b>Nomor:</b>
+                            <span t-field="doc.display_name" class="o_bold"/>
+                        </span>
+                    </div>
+                    <!--  -->
+                    <div class="col-6">
+                        <span>
+                            <b>Kepada:</b>
+                            <span t-field="doc.name" class="o_bold"/>
+                            <span class="o_bold">/</span>
+                            <span t-field="doc.name" class="o_bold"/>
+                        </span>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="row">
+                    <div class="col-6">
+                        <span>
+                            <b>Tanggal:</b>
+                        </span>
+                        <span t-field="doc.scheduled_date" t-options-widget="&quot;date&quot;" t-options-format="&quot;dd-MM-yyyy&quot;" class="o_bold"/>
+                    </div>
+                    <!--  -->
+                    <div class="col-6">
+                        <span>
+                            <b>Alamat:</b>
+                        </span>
+                        <span t-field="doc.name"/>
+                            <t t-if="doc.partner_id.city">, 
+                                <span t-field="doc.partner_id.city"/>
+                            </t>
+                            <t t-if="doc.partner_id.state_id">
+                                <t t-if="doc.partner_id.state_id">, 
+                                    <span t-field="doc.partner_id.state_id"/>
+                                </t>, 
+                                <span t-field="doc.partner_id.zip"/>
+                            </t>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="row">
+                    <div class="col-6">
+                        <span>
+                            <b>No. PO:</b>
+                        </span>
+                        <span t-field="doc.name" class="o_bold"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <div class="pt-0">
+                <t t-call="web.address_layout"/>
+            </div>
+            <t t-raw="0"/>
+        </div>
+        <!--  -->
+        <!-- <div class="footer">
+            <div class="row">
+                <div class="col-3">
+                    <span>
+                        <strong>
+                            Dikeluarkan Oleh
+                        </strong>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <span>
+                            ____________________
+                        </span>
+                        <span>
+                            <u/>
+                        </span>
+                    </span>
+                </div>
+                <div class="col-3">
+                    <span>
+                        <strong>Mengetahui</strong>
+                        <br/>
+                        <span>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <u>
+                                KA. Gudang
+                            </u>
+                        </span>
+                    </span>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <span t-field="res_company.name"/>
+                </div>
+                <div class="col-3">
+                    <span>
+                        <strong>Dikirim Oleh</strong>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <span>
+                            ________________
+                        </span>
+                    </span>
+                </div>
+                <div class="col-3">
+                    <span>
+                        <strong>Diterima Oleh</strong>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <span t-field="doc.name"/>
+                    </span>
+                </div>
+            </div>
+        </div> -->
+    </template>
+</odoo>
